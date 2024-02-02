@@ -50,7 +50,10 @@ class JupyterKernel:
             # print("Heartbeat sent...")
         except tornado.iostream.StreamClosedError:
             # print("Heartbeat failed, reconnecting...")
-            await self._connect()
+            try:
+                await self._connect()
+            except ConnectionRefusedError:
+                print("ConnectionRefusedError: Failed to reconnect to kernel websocket - Is the kernel still running?")
 
     async def _connect(self):
         if self.ws:
@@ -112,10 +115,10 @@ class JupyterKernel:
         )
 
         outputs = []
-        execution_done = False
+
 
         async def wait_for_messages():
-            nonlocal execution_done
+            execution_done = False
             while not execution_done:
                 msg = await self.ws.read_message()
                 msg = json_decode(msg)
@@ -126,13 +129,12 @@ class JupyterKernel:
                     continue
 
                 if os.environ.get("DEBUG", False):
-                    if msg_type in {'execute_input'}:
-                        break
-                    print(f"MSG TYPE: {msg_type.upper()}\nCONTENT: {msg['content']}")
+                    print(f"MSG TYPE: {msg_type.upper()} DONE:{execution_done}\nCONTENT: {msg['content']}")
 
                 if msg_type == 'error':
                     traceback = "\n".join(msg["content"]["traceback"])
-                    return traceback
+                    outputs.append(traceback)
+                    execution_done = True
                 elif msg_type == 'stream':
                     outputs.append(msg['content']['text'])
                 elif msg_type in ['execute_result', 'display_data']:
@@ -144,6 +146,7 @@ class JupyterKernel:
 
                 elif msg_type == 'execute_reply':
                     execution_done = True
+            return execution_done
 
         async def interrupt_kernel():
             client = AsyncHTTPClient()
@@ -155,16 +158,19 @@ class JupyterKernel:
             print(f"Kernel interrupted: {interrupt_response}")
 
         try:
-            await asyncio.wait_for(wait_for_messages(), timeout)
+            execution_done = await asyncio.wait_for(wait_for_messages(), timeout)
         except asyncio.TimeoutError:
             await interrupt_kernel()
             return f"[Execution timed out ({timeout} seconds).]"
 
         if not outputs and execution_done:
-            return "[Code executed successfully with no output]"
+            ret = "[Code executed successfully with no output]"
         else:
-            concated = ''.join(outputs)
-            return concated
+            ret = ''.join(outputs)
+
+        if os.environ.get("DEBUG", False):
+            print(f"OUTPUT:\n{ret}")
+        return ret
 
     async def shutdown_async(self):
         if self.kernel_id:
