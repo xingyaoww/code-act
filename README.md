@@ -34,7 +34,7 @@ Integrated with a Python interpreter, CodeAct can execute code actions and dynam
 
 ## 📁 CodeActInstruct
 
-We collect an instruction-tuning dataset CodeActInstruct that consists of 7k multi-turn interactions using CodeAct. Dataset is release at [huggingface dataset 🤗](https://huggingface.co/datasets/xingyaoww/code-act). Please refer to the paper and [this section](#📂-data-generation-optional) for details of data collection.
+We collect an instruction-tuning dataset CodeActInstruct that consists of 7k multi-turn interactions using CodeAct. Dataset is release at [huggingface dataset 🤗](https://huggingface.co/datasets/xingyaoww/code-act). Please refer to the paper and [this section](#-data-generation-optional) for details of data collection.
 
 
 ![Data Statistics](figures/data-stats.png)
