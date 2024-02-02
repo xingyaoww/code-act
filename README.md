@@ -25,12 +25,6 @@ Our extensive analysis of 17 LLMs on API-Bank and a newly curated benchmark [M<s
 ![Comparison between CodeAct and Text/JSON](figures/codeact-comparison-perf.png)
 *Quantitative results comparing CodeAct and {Text, JSON} on M<sup>3</sup>ToolEval.*
 
-<!-- ## CodeAct
-
-Integrated with a Python interpreter, CodeAct can execute code actions and dynamically revise prior actions or emit new actions upon new observations through multi-turn interactions. Our extensive analysis of 17 LLMs on API-Bank and a newly curated benchmark M^3Tool shows that CodeAct outperforms widely used alternatives like Text and JSON (up to 20% higher success rate).
-
-![Comparison between CodeAct and Text/JSON](figures/json-text-comparison.png) -->
-
 
 ## 📁 CodeActInstruct
 
