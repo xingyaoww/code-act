@@ -53,7 +53,7 @@ Trained on **CodeActInstruct** and general conversaions, **CodeActAgent** excels
 Please check out [:page_with_curl: our paper](TODO) for more details about data collection, model training, evaluation, and more!
 
 
-## :rocket: Use CodeActAgent for Your Application!
+## 🚀 Use CodeActAgent for Your Application!
 
 ### Serve the Model using vLLM into OpenAI Compatible API
 
@@ -126,7 +126,7 @@ Now you can build and start your own web application (docker-required)!
 For more information (e.g., if you don't want to use docker), please check-out chat-ui's [documentation](https://github.com/huggingface/chat-ui)!
 
 
-## :movie_camera: Reproduce Experiments in the Paper
+## 🎥 Reproduce Experiments in the Paper
 
 ```bash
 git clone https://github.com/xingyaoww/code-act
@@ -140,16 +140,16 @@ git submodule update --init --recursive
 
 **For reproducibility:** You can optionally generate data follow instructions in [docs/DATA_GENERATION.md](docs/DATA_GENERATION.md) to generate interaction data.
 
-### :blue_book: Model Training
+### 📘 Model Training
 
 We use a fork of [Megatron-LLM](https://github.com/xingyaoww/Megatron-LLM) for training. You can follow [docs/MODEL_TRAINING.md](docs/MODEL_TRAINING.md) for detailed instructions.
 
 
-### :bar_chart: Evaluation 
+### 📊 Evaluation 
 
 Please refer to [docs/EVALUATION.md](docs/EVALUATION.md) for detailed instruction.
 
-## :books: Citation
+## 📚 Citation
 
 ```bibtex
 TODO
