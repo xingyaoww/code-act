@@ -1,4 +1,4 @@
-# Executable Code Actions Elicit Better LLM Agents
+<h1 align="center"> Executable Code Actions Elicit Better LLM Agents </h1>
 
 <p align="center">
 <a href="TODO">📃 Paper</a>
