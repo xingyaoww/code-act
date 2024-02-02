@@ -1,0 +1,15 @@
+[submodule "scripts/eval/human_eval/human-eval"]
+	path = scripts/eval/human_eval/human-eval
+	url = https://github.com/openai/human-eval.git
+[submodule "scripts/eval/mt-bench/FastChat"]
+	path = scripts/eval/mt-bench/FastChat
+	url = https://github.com/xingyaoww/FastChat.git
+[submodule "scripts/eval/mint-bench/mint-bench"]
+	path = scripts/eval/mint-bench/mint-bench
+	url = https://github.com/xingyaoww/mint-bench.git
+[submodule "chat-ui"]
+	path = chat-ui
+	url = https://github.com/xingyaoww/chat-ui.git
+[submodule "Megatron-LLM"]
+	path = Megatron-LLM
+	url = https://github.com/xingyaoww/Megatron-LLM.git

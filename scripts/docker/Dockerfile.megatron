@@ -1,0 +1,11 @@
+FROM nvcr.io/nvidia/pytorch:23.09-py3
+
+COPY Megatron-LLM/requirements.txt .
+
+RUN pip install -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install ninja wandb
+RUN pip install -U flash-attn
+RUN pip install accelerate
+# docker build -t xingyaoww/pt-megatron-llm:v1.0 -f scripts/docker/Dockerfile.megatron .
+# docker build -t xingyaoww/pt-megatron-llm:v1.1.1 -f scripts/docker/Dockerfile.megatron .

@@ -1,0 +1,61 @@
+torch==2.0.1 -i https://download.pytorch.org/whl/cu118
+torchvision==0.15.2 -i https://download.pytorch.org/whl/cu118
+torchaudio==2.0.2 -i https://download.pytorch.org/whl/cu118
+pre-commit
+openai==0.28
+datasets
+wikipedia
+langchain
+streamlit
+backoff
+charset-normalizer==3.1.0
+numpy
+pandas
+pylatexenc
+google-api-python-client
+arxiv
+# Alfworld
+opencv-python
+networkx
+h5py
+tqdm
+vocab
+revtok
+Click
+transformers
+tokenizers
+scipy==1.10.1
+ipython
+matplotlib
+cython
+nltk
+pipreqs
+pyyaml
+pytz
+visdom
+sympy
+pycocotools
+# We use MINT's docker for ALFWorld, so no need to install these
+# gym==0.15.4
+# ai2thor==2.1.0
+# fast-downward @ https://github.com/MarcCote/downward/archive/faster_replan.zip
+# textworld @ https://github.com/MarcCote/TextWorld/archive/handcoded_expert_integration.zip
+# alfworld @ git+https://github.com/xingyaoww/alfworld.git
+seaborn
+google-generativeai
+python-dateutil
+statsmodels
+# APPs evaluation
+pyext
+grpcio
+vllm
+accelerate
+jsonlines
+gym==0.26.2
+pandarallel
+thefuzz
+flask
+gunicorn
+apscheduler
+docker
+tornado

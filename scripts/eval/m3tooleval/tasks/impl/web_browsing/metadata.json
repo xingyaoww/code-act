@@ -1,0 +1,218 @@
+{
+  "item_info": [
+    {
+      "name": "Mystical Wand",
+      "price": 103.84,
+      "original_price": null
+    },
+    {
+      "name": "Ancient Wand",
+      "price": 171.06,
+      "original_price": null
+    },
+    {
+      "name": "Legendary Wand",
+      "price": 68.71,
+      "original_price": null
+    },
+    {
+      "name": "Rare Wand",
+      "price": 142.77,
+      "original_price": null
+    },
+    {
+      "name": "Enchanted Wand",
+      "price": 118.32,
+      "original_price": 155.68
+    },
+    {
+      "name": "Magical Wand",
+      "price": 91.69,
+      "original_price": null
+    },
+    {
+      "name": "Enchanted Potion",
+      "price": 105.52,
+      "original_price": null
+    },
+    {
+      "name": "Ancient Potion",
+      "price": 155.26,
+      "original_price": null
+    },
+    {
+      "name": "Mystical Potion",
+      "price": 141.36,
+      "original_price": null
+    },
+    {
+      "name": "Rare Potion",
+      "price": 86.71,
+      "original_price": null
+    },
+    {
+      "name": "Legendary Potion",
+      "price": 82.93,
+      "original_price": null
+    },
+    {
+      "name": "Enchanted Spellbook",
+      "price": 173.26,
+      "original_price": null
+    },
+    {
+      "name": "Magical Spellbook",
+      "price": 90.15,
+      "original_price": null
+    },
+    {
+      "name": "Legendary Spellbook",
+      "price": 181.45,
+      "original_price": null
+    },
+    {
+      "name": "Magical Crystal Ball",
+      "price": 182.69,
+      "original_price": null
+    },
+    {
+      "name": "Enchanted Crystal Ball",
+      "price": 89.72,
+      "original_price": null
+    },
+    {
+      "name": "Legendary Crystal Ball",
+      "price": 130.84,
+      "original_price": null
+    },
+    {
+      "name": "Ancient Crystal Ball",
+      "price": 82.89,
+      "original_price": null
+    },
+    {
+      "name": "Mystical Crystal Ball",
+      "price": 163.36,
+      "original_price": null
+    },
+    {
+      "name": "Rare Crystal Ball",
+      "price": 73.99,
+      "original_price": null
+    }
+  ],
+  "person_info": [
+    {
+      "name": "Allison Hill",
+      "expertise": "Wand/Spellbook",
+      "email": "allison.hill@taylor.net",
+      "phone_number": "296-500-1338",
+      "department": "Engineering"
+    },
+    {
+      "name": "Meredith Barnes",
+      "expertise": "Spellbook/Wand",
+      "email": "meredith.barnes@lawrence-pacheco.com",
+      "phone_number": "001-626-254-2351x16155",
+      "department": "Engineering"
+    },
+    {
+      "name": "Kimberly Dudley",
+      "expertise": "Potion/Wand",
+      "email": "kimberly.dudley@miller-carter.org",
+      "phone_number": "(993)710-3413x164",
+      "department": "Engineering"
+    },
+    {
+      "name": "Henry Santiago",
+      "expertise": "Wand/Spellbook",
+      "email": "henry.santiago@zuniga.com",
+      "phone_number": "+1-232-576-4835",
+      "department": "Marketing"
+    },
+    {
+      "name": "Renee Morales",
+      "expertise": "Crystal Ball/Wand",
+      "email": "renee.morales@clark.com",
+      "phone_number": "676.872.4238",
+      "department": "Marketing"
+    },
+    {
+      "name": "Jennifer Robinson",
+      "expertise": "Wand/Crystal Ball",
+      "email": "jennifer.robinson@hicks.com",
+      "phone_number": "922-669-1669",
+      "department": "Marketing"
+    },
+    {
+      "name": "Shannon Smith",
+      "expertise": "Potion/Spellbook",
+      "email": "shannon.smith@wilson.com",
+      "phone_number": "346-627-0482",
+      "department": "Sales"
+    },
+    {
+      "name": "Katie Gonzalez",
+      "expertise": "Wand/Spellbook",
+      "email": "katie.gonzalez@farmer-ryan.net",
+      "phone_number": "2955701543",
+      "department": "Sales"
+    },
+    {
+      "name": "Theresa Miller",
+      "expertise": "Potion/Spellbook",
+      "email": "theresa.miller@cabrera-spence.net",
+      "phone_number": "001-822-778-2489x63834",
+      "department": "Sales"
+    },
+    {
+      "name": "Joseph Martinez",
+      "expertise": "Crystal Ball/Wand",
+      "email": "joseph.martinez@brown.org",
+      "phone_number": "+1-239-730-1031",
+      "department": "Sales"
+    },
+    {
+      "name": "David Caldwell",
+      "expertise": "Spellbook/Wand",
+      "email": "david.caldwell@ryan.org",
+      "phone_number": "001-773-876-3116",
+      "department": "Customer Support"
+    },
+    {
+      "name": "Scott Brown",
+      "expertise": "Potion/Spellbook",
+      "email": "scott.brown@joyce.com",
+      "phone_number": "633-938-7262",
+      "department": "Customer Support"
+    },
+    {
+      "name": "Thomas Ramos",
+      "expertise": "Crystal Ball/Potion",
+      "email": "thomas.ramos@garcia.com",
+      "phone_number": "432-867-7360",
+      "department": "Customer Support"
+    },
+    {
+      "name": "James House",
+      "expertise": "Spellbook/Wand",
+      "email": "james.house@mitchell-horton.net",
+      "phone_number": "+1-972-434-3098x05009",
+      "department": "Customer Support"
+    },
+    {
+      "name": "Jordan York",
+      "expertise": "Potion/Crystal Ball",
+      "email": "jordan.york@larson.com",
+      "phone_number": "(719)639-9091x6998",
+      "department": "Customer Support"
+    },
+    {
+      "name": "Mike Allen",
+      "expertise": "Wand/Crystal Ball",
+      "email": "mike.allen@anderson-brewer.info",
+      "phone_number": "310-579-9118x38425",
+      "department": "Customer Support"
+    }
+  ]
+}

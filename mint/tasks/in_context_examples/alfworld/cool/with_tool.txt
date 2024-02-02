@@ -1,0 +1,58 @@
+Task:
+You are in the middle of a room. Looking quickly around you, you see a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a safe 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.
+Your task is to: cool some pan and put it in stoveburner.
+
+Assistant:
+<thought>
+To solve the task, I need to find and take a pan, then cool it with fridge, then put it in stoveburner.
+First I need to find a pan. An pan is more likely to appear in stoveburner (1-4), sinkbasin (1), diningtable (1), countertop (1-2), cabinet (1-16), drawer (1-5). I can check one by one.
+</thought>
+<execute>
+for loc_to_check in [
+    *[f"stoveburner {i}" for i in range(1, 5)],
+    "sinkbasin 1", "diningtable 1",
+    "countertop 1", "countertop 2",
+    *[f"cabinet {i}" for i in range(1, 17)],
+    *[f"drawer {i}" for i in range(1, 6)]
+]:
+    res = goto(loc_to_check)
+    print(res)
+    if "closed" in res:
+        # The receptacle is closed. I need to open it to see what's inside.
+        res = open_receptacle(loc_to_check)
+        print(res)
+
+    if "pan" in res:
+        print(f"Found a pan in {loc_to_check}.")
+        break
+</execute>
+
+Observation:
+On the stoveburner 1, you see nothing.
+On the stoveburner 2, you see a pot 1.
+On the stoveburner 3, you see a pan 1.
+Found a pan in stoveburner 3.
+
+Assistant:
+<thought>
+Now I find a pan 1. Next, I need to take it and go to fridge 1 to cool it.
+Once it is cooled, I can put it in stoveburner 1.
+</thought>
+<execute>
+print(take_from("pan 1", "stoveburner 3"))
+print(goto("fridge 1"))
+print(cool("pan 1", "fridge 1"))
+print(goto("stoveburner 1"))
+print(put("pan 1", "stoveburner 1"))
+</execute>
+
+Observation:
+You pick up the pan 1 from the stoveburner 3.
+The fridge 1 is closed.
+You cool the pan 1 using the fridge 1.
+On the stoveburner 1, you see nothing.
+You put the pan 1 in/on the stoveburner 1.
+
+Assistant:
+<thought> I have completed the task. </thought>
+<solution> done </solution>

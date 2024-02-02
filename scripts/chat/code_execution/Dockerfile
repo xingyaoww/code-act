@@ -1,0 +1,14 @@
+FROM quay.io/jupyter/datascience-notebook:2023-10-20
+
+# install the kernel gateway
+RUN pip install jupyter_kernel_gateway
+RUN pip install langchain google-api-python-client
+RUN pip install boilerpy3
+RUN pip install pandas datasets sympy
+RUN pip install transformers[torch]
+RUN pip install scikit-learn matplotlib seaborn
+RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
+# run kernel gateway on container start, not notebook server
+EXPOSE 8888
+CMD ["jupyter", "kernelgateway", "--KernelGatewayApp.ip=0.0.0.0", "--KernelGatewayApp.port=8888"]
+# docker build -t xingyaoww/agent-jupyter-kernel-gateway .

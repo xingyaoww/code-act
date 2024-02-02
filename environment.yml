@@ -1,0 +1,13 @@
+name: code-act
+channels:
+  - defaults
+  - pytorch
+  - nvidia/label/cuda-11.8.0
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pytorch-cuda=11.8
+  - cuda-toolkit
+  - pip
+  - pip:
+      - -r requirements.txt

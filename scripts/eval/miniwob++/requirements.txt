@@ -1,0 +1,8 @@
+accelerate
+fschat
+gym
+openai
+selenium
+transformers
+Pillow
+regex

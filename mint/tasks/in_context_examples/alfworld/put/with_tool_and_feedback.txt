@@ -1,0 +1,52 @@
+Task:
+You are in the middle of a room. Looking quickly around you, you see a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a countertop 1, a garbagecan 1, a handtowelholder 2, a handtowelholder 1, a sinkbasin 2, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, and a towelholder 1.
+Your task is to: put some spraybottle on toilet.
+
+Assistant:
+<thought>
+To solve the task, I need to find and take a sparybottle, then put it on toilet.
+First I need to find a spraybottle. A spraybottle is more likely to appear in cabinet (1-4), sinkbasin (1-2), and garbagecan (1). I can check one by one.
+</thought>
+<execute>
+for loc_to_check in ["cabinet 1", "cabinet 2", "cabinet 3", "cabinet 4", "sinkbasin 1", "sinkbasin 2", "garbagecan 1"]:
+    res = goto(loc_to_check)
+    print(res)
+    if "closed" in res:
+        # The receptacle is closed. I need to open it to see what's inside.
+        res = open_receptacle(loc_to_check)
+        print(res)
+    if "spraybottle" in res:
+        print(f"Found a spraybottle in {loc_to_check}.")
+        break
+</execute>
+
+Observation:
+On the cabinet 1, you see a cloth 1, a soapbar 1, a soapbottle 1.
+The cabinet 2 is closed.
+You open the cabinet 2. The cabinet 2 is open. In it, you see a candle 1, and a spraybottle 2.
+Found a spraybottle in cabinet 2.
+
+Expert feedback:
+This is GOOD. You have made a good attempt to solve the task. You have found a spraybottle. Now you can take it to the toilet.
+
+Assistant:
+<thought>
+I am now at cabinet 2 where I found a spraybottle 2. Next, I need to take it and put it on toilet 1.
+</thought>
+<execute>
+print(take_from("spraybottle 2", "cabinet 2"))
+print(goto("toilet 1"))
+print(put("spraybottle 2", "toilet 1"))
+</execute>
+
+Observation:
+You pick up the spraybottle 2 from the cabinet 2.
+On the toilet 1, you see a soapbottle 2.
+You put the spraybottle 2 in/on the toilet 1.
+
+Expert feedback:
+This is GOOD. You have put a sparybottle in the toilet. The task is completed.
+
+Assistant:
+<thought> I have completed the task. </thought>
+<solution> done </solution>

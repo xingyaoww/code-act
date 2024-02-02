@@ -1,0 +1,36 @@
+Task:
+Given the following table (only the first 5 rows are shown):
+           City Country (NOC)  Round 1  Run-off  Round 3  Round 4  Round 5
+0        Athens        Greece       32      NaN     38.0     52.0     66.0
+1          Rome         Italy       23      NaN     28.0     35.0     41.0
+2     Cape Town  South Africa       16     62.0     22.0     20.0      NaN
+3     Stockholm        Sweden       20      NaN     19.0      NaN      NaN
+4  Buenos Aires     Argentina       16     44.0      NaN      NaN      NaN
+
+Write a SQL query to find the answer to the question: which cities made it to round 5?.
+The SQLite3 database is preloaded for you and can be accessed within <execute> block via the variable `conn` (SQLite3 connection object).
+The table name is `data_table`.
+
+Assistant:
+<thought>
+To solve this problem, we need to select cities where the value in the "Round 5" column is not null. Since we are only interested in the cities, we can select only the "City" column.
+</thought>
+<execute>
+query = """
+SELECT 
+    City
+FROM 
+    data_table
+WHERE 
+    `Round 5` IS NOT NULL;
+"""
+# conn is preloaded
+result = conn.execute(query).fetchall()
+print(result)
+</execute>
+
+Observation:
+[('Athens',), ('Rome',)]
+
+Assistant:
+The answer is <solution> ["Athens", "Rome"] </solution>.

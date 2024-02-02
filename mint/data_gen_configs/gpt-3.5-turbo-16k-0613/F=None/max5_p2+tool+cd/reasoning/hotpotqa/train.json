@@ -1,0 +1,43 @@
+{
+    "agent": {
+        "agent_class": "OpenAILMAgent",
+        "config": {
+            "model_name": "gpt-3.5-turbo-16k-0613",
+            "chat_mode": true,
+            "max_tokens": 1024,
+            "temperature": 0.0
+        }
+    },
+    "task": {
+        "task_class": "ReasoningTask",
+        "task_type": "reasoning",
+        "tool_imports": [
+            [
+                "mint.tools.wikipedia_search",
+                "WikipediaQueryRun"
+            ]
+        ],
+        "filepath": "data/processed/reasoning/train/hotpotqa.jsonl"
+    },
+    "output_dir": "data/outputs/gpt-3.5-turbo-16k-0613/F=None/max5_p2+tool+cd/reasoning/hotpotqa/train",
+    "env_config": {
+        "max_steps": 5,
+        "use_tools": true,
+        "max_propose_solution": 2,
+        "count_down": true
+    },
+    "feedback_config": {
+        "feedback_agent_config": {
+            "chat_mode": true,
+            "max_tokens": 1024,
+            "temperature": 0.0,
+            "stop": [
+                "\nQ:"
+            ],
+            "agent_class": "None",
+            "model_name": "None"
+        },
+        "pseudo_human_feedback": "None",
+        "feedback_form": "None"
+    }
+}

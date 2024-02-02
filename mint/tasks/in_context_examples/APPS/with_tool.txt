@@ -1,0 +1,152 @@
+Task:
+Mikhail walks on a Cartesian plane. He starts at the point $(0, 0)$, and in one move he can go to any of eight adjacent points. For example, if Mikhail is currently at the point $(0, 0)$, he can go to any of the following points in one move:   $(1, 0)$;  $(1, 1)$;  $(0, 1)$;  $(-1, 1)$;  $(-1, 0)$;  $(-1, -1)$;  $(0, -1)$;  $(1, -1)$. 
+
+If Mikhail goes from the point $(x1, y1)$ to the point $(x2, y2)$ in one move, and $x1 \ne x2$ and $y1 \ne y2$, then such a move is called a diagonal move.
+
+Mikhail has $q$ queries. For the $i$-th query Mikhail's target is to go to the point $(n_i, m_i)$ from the point $(0, 0)$ in exactly $k_i$ moves. Among all possible movements he want to choose one with the maximum number of diagonal moves. Your task is to find the maximum number of diagonal moves or find that it is impossible to go from the point $(0, 0)$ to the point $(n_i, m_i)$ in $k_i$ moves.
+
+Note that Mikhail can visit any point any number of times (even the destination point!).
+
+
+-----Input-----
+
+The first line of the input contains one integer $q$ ($1 \le q \le 10^4$) — the number of queries.
+
+Then $q$ lines follow. The $i$-th of these $q$ lines contains three integers $n_i$, $m_i$ and $k_i$ ($1 \le n_i, m_i, k_i \le 10^{18}$) — $x$-coordinate of the destination point of the query, $y$-coordinate of the destination point of the query and the number of moves in the query, correspondingly.
+
+
+-----Output-----
+
+Print $q$ integers. The $i$-th integer should be equal to -1 if Mikhail cannot go from the point $(0, 0)$ to the point $(n_i, m_i)$ in exactly $k_i$ moves described above. Otherwise the $i$-th integer should be equal to the the maximum number of diagonal moves among all possible movements.
+
+
+-----Example-----
+Input
+3
+2 2 3
+4 3 7
+10 1 9
+
+Output
+1
+6
+-1
+
+
+
+-----Note-----
+
+One of the possible answers to the first test case: $(0, 0) \to (1, 0) \to (1, 1) \to (2, 2)$.
+
+One of the possible answers to the second test case: $(0, 0) \to (0, 1) \to (1, 2) \to (0, 3) \to (1, 4) \to (2, 3) \to (3, 2) \to (4, 3)$.
+
+In the third test case Mikhail cannot reach the point $(10, 1)$ in 9 moves.
+
+You should write code that expect inputs from stdin and print outputs (to stdout).
+
+Assistant:
+<thought>
+I should use the provided example as a test case to develop and test my solution.
+
+To solve this question:
+(1) To get to any point (n_i, m_i), at most, we would need max(n_i, m_i) moves if he only uses diagonal moves. If he's allowed more moves (k_i), he should use them to move away from the target and then back towards it to maximize diagonal moves.
+
+(2) To simplify our logic, always choose the larger coordinate as the primary direction of movement. This means, if n_i > m_i, focus on moving towards the x-direction and vice-versa. This avoids having to check both directions every time.
+
+(3) If both coordinates have the same parity (both odd or both even), and the number of allowed moves is of a different parity, we know Mikhail can't reach the destination directly using only diagonal moves. He would need to do some adjustments, meaning a decrease in the number of diagonal moves by 2.
+
+Let me try to implement this solution.
+</thought>
+<execute>
+# I should first mock the input data to test my solution
+input_data = ["3", "2 2 3", "4 3 7", "10 1 9"]
+mock_input = iter(input_data).__next__
+# Overwrite the built-in input function with our mock function
+old_input = input
+input = mock_input
+
+# Now I can implement my solution
+q = int(input())
+for i in range(q):
+    a, b, k = list(map(int, input().split()))
+    if a < b:
+        a, b, = b, a
+        
+    if a % 2 == b % 2 != k % 2:
+        print(k - 2)
+    elif (a + b) % 2 != 0:
+        print(k - 1)
+    else:
+        print(k)
+
+# Restore the built-in input function
+input = old_input
+</execute>
+
+Observation:
+1
+6
+8
+
+Assistant:
+<thought>
+I made a mistake. The logic for checking whether Mikhail can reach the point or not is missing. Let me correct this.
+
+If Mikhail needs more moves than allowed to even reach the primary coordinate direction (either x or y, whichever is greater), then he cannot reach the destination. In this case, the output should be -1.
+This is the missing check if a > k: which results in the output -1.
+
+Let's add this logic and re-run the solution.
+</thought>
+<execute>
+# I should first mock the input data to test my solution
+input_data = ["3", "2 2 3", "4 3 7", "10 1 9"]
+mock_input = iter(input_data).__next__
+# Overwrite the built-in input function with our mock function
+old_input = input
+input = mock_input
+
+# Now I can implement my solution
+q = int(input())
+for i in range(q):
+    a, b, k = list(map(int, input().split()))
+    if a < b:
+        a, b, = b, a
+
+    if a > k:
+        print(-1)
+    elif a % 2 == b % 2 != k % 2:
+        print(k - 2)
+    elif (a + b) % 2 != 0:
+        print(k - 1)
+    else:
+        print(k)
+
+# Restore the built-in input function
+input = old_input
+</execute>
+
+Observation:
+1
+6
+-1
+
+Assistant:
+<thought> I can now submit the solution.
+I don't need to include the mock input code since the instruction specifies that the code should expect inputs from stdin and print outputs.
+</thought>
+<solution>
+q = int(input())
+for i in range(q):
+    a, b, k = list(map(int, input().split()))
+    if a < b:
+        a, b, = b, a
+
+    if a > k:
+        print(-1)
+    elif a % 2 == b % 2 != k % 2:
+        print(k - 2)
+    elif (a + b) % 2 != 0:
+        print(k - 1)
+    else:
+        print(k)
+</solution>

@@ -1,0 +1,51 @@
+Task:
+You are in the middle of a room. Looking quickly around you, you see a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a diningtable 1, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.
+Your task is to: put a hot apple in fridge.
+
+Assistant:
+<thought>
+To solve the task, I need to find and take an apple, then heat it with microwave, then put it in fridge.
+First I need to find an apple. An apple is more likely to appear in fridge (1), diningtable (1), coffeetable (1), drawer (1), cabinet (1-13), garbagecan (1). I can check one by one.
+</thought>
+<execute>
+for loc_to_check in ["fridge 1", "diningtable 1", "coffeetable 1", "drawer 1", *[f"cabinet {i}" for i in range(1, 14)], "garbagecan 1"]:
+    res = goto(loc_to_check)
+    print(res)
+    if "closed" in res:
+        # The receptacle is closed. I need to open it to see what's inside.
+        res = open_receptacle(loc_to_check)
+        print(res)
+
+    if "apple" in res:
+        print(f"Found an apple in {loc_to_check}.")
+        break
+</execute>
+
+Observation:
+The fridge 1 is closed.
+You open the fridge 1. The fridge 1 is open. In it, you see a cup 1, and a egg 1.
+On the diningtable 1, you see a apple 1, a bread 1, a fork 3, a fork 2, a fork 1, a mug 2, a peppershaker 3, a plate 2, a pot 1, a soapbottle 3, a spatula 1, a spoon 3, a spoon 2, a spoon 1, a winebottle 3, and a winebottle 2.
+Found an apple in diningtable 1.
+
+Assistant:
+<thought>
+Now I find an apple 1. Next, I need to take it and go to microwave 1 to heat it. After that, I need to put it in fridge 1.
+</thought>
+<execute>
+print(take_from("apple 1", "diningtable 1"))
+print(goto("microwave 1"))
+print(heat("apple 1", "microwave 1"))
+print(goto("fridge 1"))
+print(put("apple 1", "fridge 1"))
+</execute>
+
+Observation:
+You pick up the apple 1 from the diningtable 1.
+The microwave 1 is closed.
+You heat the apple 1 using the microwave 1.
+The fridge 1 is open. In it, you see a cup 1, and a egg 1.
+You put the apple 1 in/on the fridge 1.
+
+Assistant:
+<thought> I have completed the task. </thought>
+<solution> done </solution>

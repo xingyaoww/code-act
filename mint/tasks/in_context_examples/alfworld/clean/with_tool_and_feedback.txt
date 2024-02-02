@@ -1,0 +1,56 @@
+Task:
+You are in the middle of a room. Looking quickly around you, you see a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a diningtable 1, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.
+Your task is to: put a clean lettuce in diningtable.
+
+Assistant:
+<thought>
+To solve the task, I need to find a lettuce, then clean it with sinkbasin, then put it in diningtable.
+First I need to find a lettuce. A lettuce is more likely to appear in fridge (1), diningtable (1), sinkbasin (1), stoveburner (1-3), cabinet (1-13). I can check one by one.
+</thought>
+<execute>
+for loc_to_check in ["fridge 1", "diningtable 1", "sinkbasin 1", "stoveburner 1", "stoveburner 2", "stoveburner 3", *[f"cabinet {i}" for i in range(1, 14)]]:
+    res = goto(loc_to_check)
+    if "closed" in res:
+        # The receptacle is closed. I need to open it to see what's inside.
+        res = open_receptacle(loc_to_check)
+
+    if "lettuce" in res:
+        print(res)
+        print(f"Found a lettuce in {loc_to_check}.")
+        break
+</execute>
+
+Observation:
+On the diningtable 1, you see a apple 1, a bread 1, a butterknife 2, a cup 2, a fork 2, a knife 2, a knife 1, a ladle 1, a lettuce 1, a mug 2, a mug 1, a pan 2, a peppershaker 1, a spatula 3, a tomato 2, and a tomato 1.
+Found a lettuce in diningtable 1.
+
+Expert feedback:
+This is GOOD. You have found a lettuce in diningtable. Now you need to clean it and put it in diningtable.
+
+Assistant:
+<thought>
+Now I find a lettuce 1. Next, I need to take it and go to sinkbasin 1 and clean the lettuce 1.
+Once it is cleaned, I need to put it in diningtable 1.
+</thought>
+<execute>
+print(take_from("lettuce 1", "diningtable 1"))
+print(goto("sinkbasin 1"))
+print(clean("lettuce 1", "sinkbasin 1"))
+print(goto("diningtable 1"))
+print(put("lettuce 1", "diningtable 1"))
+</execute>
+
+Observation:
+You pick up the lettuce 1 from the diningtable 1.
+On the sinkbasin 1, you see a apple 2, a ladle 2, a spoon 1, and a tomato 3.
+You clean the lettuce 1 using the sinkbasin 1.
+On the diningtable 1, you see a apple 1, a bread 1, a butterknife 2, a cup 2, a fork 2, a knife 2, a knife 1, a ladle 1, a mug 2, a mug 1, a pan 2, a peppershaker 1, a spatula 3, a tomato 2, and a tomato 1.
+You put the lettuce 1 in/on the diningtable 1.
+
+Expert feedback:
+This is GOOD. You have cleaned the lettuce and put it in diningtable.
+You have completed the task.
+
+Assistant:
+<thought> I have completed the task. </thought>
+<solution> done </solution>
