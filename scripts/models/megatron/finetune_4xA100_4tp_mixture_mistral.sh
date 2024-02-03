@@ -1,5 +1,5 @@
 #!/bin/bash
-source scripts/train/megatron/source.sh
+source scripts/models/megatron/source.sh
 export CUDA_VISIBLE_DEVICES=0,1,2,3
 
 TP=4
