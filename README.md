@@ -49,7 +49,7 @@ Please check out [:page_with_curl: our paper](TODO) for more details about data 
 
 ## 🚀 Use CodeActAgent for Your Application!
 
-![Demo](figures/codeact-demo.gif)
+![Demo](https://github.com/xingyaoww/code-act/assets/38853559/62c80ada-62ce-447e-811c-fc801dd4beac)
 *Demo of the chat interface.*
 
 ### Serve the Model using vLLM into OpenAI Compatible API
