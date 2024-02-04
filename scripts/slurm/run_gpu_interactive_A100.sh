@@ -1,6 +1,6 @@
 #!/bin/bash
 srun \
-    -A bcbf-delta-gpu \
+    -A TODO_YOUR_ACCOUNT \
     --time=00:30:00 \
     --nodes=1 \
     --ntasks-per-node=16 \
