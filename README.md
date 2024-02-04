@@ -49,6 +49,9 @@ Please check out [:page_with_curl: our paper](TODO) for more details about data 
 
 ## 🚀 Use CodeActAgent for Your Application!
 
+![Demo](figures/codeact-demo.gif)
+*Demo of the chat interface.*
+
 ### Serve the Model using vLLM into OpenAI Compatible API
 
 ```bash
