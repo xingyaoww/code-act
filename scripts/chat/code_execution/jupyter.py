@@ -360,7 +360,7 @@ class JupyterGatewayKubernetes:
         return f"{service_ip}:{self.port}"
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.api_instance.delete_namespaced_service(name=self.pod_name, namespace=self.namespace)
+        self.api_instance.delete_namespaced_service(name=self.pod_name, namespace=self.NAMESPACE)
         logging.info(f"Service {self.pod_name} deleted.")
         self.api_instance.delete_namespaced_pod(self.pod_name, self.NAMESPACE)
         logging.info(f"Pod {self.pod_name} has been deleted.")
