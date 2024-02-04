@@ -1,16 +1,27 @@
+import os
 import time
 import json
 import signal
+import logging
 import argparse
 import tornado.ioloop
 import tornado.web
 import tornado.httpserver
 from collections import namedtuple
-from jupyter import JupyterKernel, JupyterGatewayDocker
+from jupyter import JupyterKernel, JupyterGatewayDocker, JupyterGatewayKubernetes
 
-# Global data structure to map convid to (JupyterGatewayDocker, JupyterKernel)
+logging.basicConfig(level=logging.INFO)
+
+if os.environ.get("USE_KUBERNETES", "false").lower() == "true":
+    JupyterKernelWrapper = JupyterGatewayKubernetes
+    logging.info("Using Kubernetes as the backend for JupyterGateway")
+else:
+    JupyterKernelWrapper = JupyterGatewayDocker
+    logging.info("Using Docker as the backend for JupyterGateway")
+
+# Global data structure to map convid to (JupyterKernelWrapper, JupyterKernel)
 JupyterKernelType = namedtuple("JupyterKernelType", [
-    "gateway_docker",
+    "kernel_wrapper",
     "kernel",
     "last_access_time"
 ])
@@ -29,18 +40,18 @@ def cleanup_kernels(app, force=False):
 
     if force:
         to_delete = list(conv_id_to_kernel.keys())
-        print(f"Force cleanup all {len(to_delete)} kernels")
+        logging.info(f"Force cleanup all {len(to_delete)} kernels")
 
     for convid in to_delete:
         # Close the kernel
         # kernel: JupyterKernel = conv_id_to_kernel[convid].kernel
         # kernel.shutdown()  # Close the JupyterKernel
-        # Close the JupyterGatewayDocker by close its context manager
-        gateway_docker = conv_id_to_kernel[convid].gateway_docker
-        gateway_docker.__exit__(None, None, None)  # Close the JupyterGatewayDocker
+        # Close the JupyterKernelWrapper by close its context manager
+        kernel_wrapper = conv_id_to_kernel[convid].kernel_wrapper
+        kernel_wrapper.__exit__(None, None, None)  # Close the JupyterKernelWrapper
         # Delete the entry from the global data structure
         del conv_id_to_kernel[convid]
-        print(f"Kernel closed for conversation {convid}")
+        logging.info(f"Kernel closed for conversation {convid}")
 
 class ExecuteHandler(tornado.web.RequestHandler):
     async def post(self):
@@ -53,17 +64,21 @@ class ExecuteHandler(tornado.web.RequestHandler):
 
         conv_id_to_kernel = self.application.conv_id_to_kernel
         if convid not in conv_id_to_kernel:
-            gateway_docker = JupyterGatewayDocker()
-            url_suffix = gateway_docker.__enter__()
+            kernel_wrapper = JupyterKernelWrapper(
+                name=f"conv-{convid}",
+            )
+            url_suffix = kernel_wrapper.__enter__()
+            if os.environ.get("DEBUG", False):
+                logging.info(f"Kernel URL: {url_suffix}")
             kernel = JupyterKernel(url_suffix, convid)
             await kernel.initialize()
             conv_id_to_kernel[convid] = JupyterKernelType(
-                gateway_docker,
+                kernel_wrapper,
                 kernel,
                 None
             )
             new_kernel = True
-            print(f"Kernel created for conversation {convid}")
+            logging.info(f"Kernel created for conversation {convid}")
 
         # Update last access time
         kernel_access_time = time.time()
@@ -95,16 +110,16 @@ if __name__ == "__main__":
     # Wrap cleanup_kernels to pass the app object
     periodic_cleanup = tornado.ioloop.PeriodicCallback(
         lambda: cleanup_kernels(app),
-        60000
+        int(os.environ.get("CLEANUP_TIMEOUT_MS", 60000))
     )
     periodic_cleanup.start()
 
     # Setup signal handler
     def signal_handler(signum, frame, app):
-        print("Received SIGINT, cleaning up...")
+        logging.info("Received SIGINT, cleaning up...")
         cleanup_kernels(app, force=True)
         tornado.ioloop.IOLoop.current().stop()
-        print("Cleanup complete, shutting down.")
+        logging.info("Cleanup complete, shutting down.")
 
     signal.signal(
         signal.SIGINT,

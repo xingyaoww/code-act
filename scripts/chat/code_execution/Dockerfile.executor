@@ -11,4 +11,5 @@ RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
 # run kernel gateway on container start, not notebook server
 EXPOSE 8888
 CMD ["jupyter", "kernelgateway", "--KernelGatewayApp.ip=0.0.0.0", "--KernelGatewayApp.port=8888"]
-# docker build -t xingyaoww/agent-jupyter-kernel-gateway .
+# docker build -t xingyaoww/codeact-executor -f Dockerfile.executor .
+# docker push xingyaoww/codeact-executor

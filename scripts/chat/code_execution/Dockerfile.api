@@ -1,0 +1,18 @@
+FROM python:3.9
+
+EXPOSE 8081
+RUN pip install --upgrade pip
+RUN pip install tornado
+RUN pip install docker
+RUN pip install kubernetes
+
+# Install ping for debugging
+RUN apt-get update && apt-get install -y iputils-ping
+
+# copy over file
+RUN mkdir -p /app
+WORKDIR /app
+COPY . /app
+
+# docker build -t xingyaoww/codeact-execute-api -f Dockerfile.api .
+# docker push xingyaoww/codeact-execute-api
