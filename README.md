@@ -1,7 +1,7 @@
 <h1 align="center"> Executable Code Actions Elicit Better LLM Agents </h1>
 
 <p align="center">
-<a href="TODO">📃 Paper</a>
+<a href="https://arxiv.org/abs/2402.01030">📃 Paper</a>
 •
 <a href="https://huggingface.co/datasets/xingyaoww/code-act" >🤗 Data (CodeActInstruct)</a>
 •
@@ -149,5 +149,12 @@ Please refer to [docs/EVALUATION.md](docs/EVALUATION.md) for detailed instructio
 ## 📚 Citation
 
 ```bibtex
-TODO
+@misc{wang2024executable,
+      title={Executable Code Actions Elicit Better LLM Agents}, 
+      author={Xingyao Wang and Yangyi Chen and Lifan Yuan and Yizhe Zhang and Yunzhu Li and Hao Peng and Heng Ji},
+      year={2024},
+      eprint={2402.01030},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
 ```
