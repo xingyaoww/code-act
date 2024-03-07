@@ -17,5 +17,5 @@ mv data/eval/math/MATH/* data/eval/math
 rm -r data/eval/math/MATH
 
 # GSM8K
-check_conda_env_and_activate code-act-agent
+check_conda_env_and_activate code-act
 python3 -c "import datasets; dataset = datasets.load_dataset('gsm8k', 'main'); dataset.save_to_disk('data/eval/gsm8k')"
