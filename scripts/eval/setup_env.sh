@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source scripts/eval/source.sh
-check_conda_env_and_activate code-act-agent
+check_conda_env_and_activate code-act
 # if jq is not installed, install it
 if ! command -v jq &> /dev/null
 then
