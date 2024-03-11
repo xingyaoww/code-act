@@ -16,7 +16,7 @@ Integrated with a Python interpreter, CodeAct can execute code actions and dynam
 ![Overview](figures/overview.png)
 
 ## News
-**March 11, 2024**: We now support serving all of the CodeActAgent's components (LLM serving, code executor, MongoDB, Chat-UI) via Kubernetes ⎈! Check out [this guide](docs/KUBERNETES_DEPLOY.md)!
+**Mar 11, 2024**: We now support serving all of the CodeActAgent's components (LLM serving, code executor, MongoDB, Chat-UI) via Kubernetes ⎈! Check out [this guide](docs/KUBERNETES_DEPLOY.md)!
 
 **Feb 2, 2024**: CodeAct is released!
 
