@@ -1,0 +1,269 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: codeact-chat-ui
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secrets
+  namespace: codeact-chat-ui
+type: Opaque
+data:
+  mongodbUsername: TODO_USER_REPLACE # User replaces this with their MongoDB username in base64
+  mongodbPassword: TODO_USER_REPLACE # User replaces this with their MongoDB password in base64
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-ui-deployment
+  namespace: codeact-chat-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-ui
+  template:
+    metadata:
+      labels:
+        app: chat-ui
+    spec:
+      containers:
+      - name: chat-ui
+        image: TODO_USER_REPLACE # User replace this with their image path for chat-ui container
+        ports:
+        - containerPort: 80
+        env:
+        - name: PORT
+          value: "80"
+        resources:
+          requests:
+            memory: "8G"
+            cpu: "4"
+          limits:
+            memory: "16G"
+            cpu: "4"
+      imagePullSecrets:
+      - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-ui-service
+  namespace: codeact-chat-ui
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30080
+  selector:
+    app: chat-ui
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  namespace: codeact-chat-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongodb/mongodb-community-server:latest
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - mountPath: "/data/db"
+          name: mongodb-data
+        resources:
+          requests:
+            memory: "4G"
+            cpu: "2"
+          limits:
+            memory: "8G"
+            cpu: "4"
+        env:
+        - name: MONGODB_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: mongodbUsername
+        - name: MONGODB_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: mongodbPassword
+        securityContext:
+          # TODO: You may need to modify this for different permission
+          runAsUser: 1000
+          runAsGroup: 1000
+      volumes:
+      - name: mongodb-data
+        hostPath:
+          # This path should ideally come from the ConfigMap, but direct reference is not supported here.
+          path: "TODO_USER_REPLACE" # User replace this with their local disk path for chat database (e.g., /mnt/data/database)
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  namespace: codeact-chat-ui
+spec:
+  type: ClusterIP
+  ports:
+  - port: 27017
+    targetPort: 27017
+  selector:
+    app: mongodb
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-deployment
+  namespace: codeact-chat-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vllm
+  template:
+    metadata:
+      labels:
+        app: vllm
+    spec:
+      containers:
+      - name: vllm
+        image: vllm/vllm-openai:v0.3.0
+        args:
+        - "--host"
+        - "0.0.0.0"
+        - "--model"
+        - "/data/CodeActAgent-Mistral-7b-v0.1" # TODO_USER_REPLACE: Modify This if needed
+        - "--served-model-name"
+        - "CodeActAgent-Mistral-7b-v0.1" # TODO_USER_REPLACE: Modify This if needed
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+            memory: "32G"
+            cpu: "4"
+          requests:
+            memory: "8G"
+            cpu: "4"
+        env:
+        - name: CUDA_VISIBLE_DEVICES
+          value: "0" # TODO_USER_REPLACE: modify this if using more GPUs
+        volumeMounts:
+        - mountPath: "/data"
+          name: model-data
+      volumes:
+      - name: model-data
+        hostPath:
+          # This path should ideally come from the ConfigMap, but direct reference is not supported here.
+          path: "TODO_USER_REPLACE" # TODO_USER_REPLACE: modify this to map your huggigface model into the pod
+          type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm-service
+  namespace: codeact-chat-ui
+spec:
+  type: NodePort
+  ports:
+  - port: 8000
+    nodePort: 30000
+  selector:
+    app: vllm
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: executor-service-account
+  namespace: codeact-chat-ui
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: executor-service-account-rolebinding
+  namespace: codeact-chat-ui
+subjects:
+- kind: ServiceAccount
+  name: executor-service-account
+  namespace: codeact-chat-ui
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codeact-execute-api
+  namespace: codeact-chat-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codeact-execute-api
+  template:
+    metadata:
+      labels:
+        app: codeact-execute-api
+    spec:
+      containers:
+      - name: codeact-execute-api
+        image: TODO_USER_REPLACE # User replace this with their image path for codeact-execute-api container
+        env:
+        - name: USE_KUBERNETES
+          value: "1"
+        - name: KUBERNETES_NAMESPACE
+          value: "codeact-chat-ui"
+        - name: CLEANUP_TIMEOUT_MS
+          value: "60000"
+        ports:
+        - containerPort: 8001
+        resources:
+          limits:
+            memory: "16G"
+            cpu: "2"
+          requests:
+            memory: "4G"
+            cpu: "2"
+        command: ["/bin/sh", "-c"]  # Use shell to execute the command
+        args: ["python3 api.py --port 8001"]
+      serviceAccount: executor-service-account
+      serviceAccountName: executor-service-account
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: codeact-execute-api-service
+  namespace: codeact-chat-ui
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8001
+    targetPort: 8001
+  selector:
+    app: codeact-execute-api

@@ -1,26 +1,56 @@
 import os
+import re
 import time
 import docker
 import asyncio
 import tornado
 import logging
 
-from kubernetes import client
-from kubernetes import config
 from tornado.escape import json_encode, json_decode, url_escape
 from tornado.websocket import websocket_connect, WebSocketHandler
 from tornado.ioloop import IOLoop, PeriodicCallback
 from tornado.httpclient import AsyncHTTPClient, HTTPRequest
 from uuid import uuid4
 
-# from predefine_tools import (
-#     GOOGLE_SEARCH,
-#     GET_URL_CONTENT
-# )
-
 logging.basicConfig(level=logging.INFO)
-config.load_incluster_config()
+if os.environ.get("USE_KUBERNETES", "0").lower() == "1":
+    from kubernetes import client, config
+    config.load_incluster_config()
 
+
+def strip_ansi(o: str) -> str:
+    """
+    Removes ANSI escape sequences from `o`, as defined by ECMA-048 in
+    http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-048.pdf
+
+    # https://github.com/ewen-lbh/python-strip-ansi/blob/master/strip_ansi/__init__.py
+    
+    >>> strip_ansi("\\033[33mLorem ipsum\\033[0m")
+    'Lorem ipsum'
+    
+    >>> strip_ansi("Lorem \\033[38;25mIpsum\\033[0m sit\\namet.")
+    'Lorem Ipsum sit\\namet.'
+    
+    >>> strip_ansi("")
+    ''
+    
+    >>> strip_ansi("\\x1b[0m")
+    ''
+    
+    >>> strip_ansi("Lorem")
+    'Lorem'
+    
+    >>> strip_ansi('\\x1b[38;5;32mLorem ipsum\\x1b[0m')
+    'Lorem ipsum'
+    
+    >>> strip_ansi('\\x1b[1m\\x1b[46m\\x1b[31mLorem dolor sit ipsum\\x1b[0m')
+    'Lorem dolor sit ipsum'
+    """
+    
+    # pattern = re.compile(r'/(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]/')
+    pattern = re.compile(r'\x1B\[\d+(;\d+){0,2}m')
+    stripped = pattern.sub('', o)
+    return stripped
 
 class JupyterKernel:
     def __init__(
@@ -44,7 +74,7 @@ class JupyterKernel:
         await self.execute(r"%colors nocolor")
         # pre-defined tools
         self.tools_to_run = [
-            # TODO: You can add code for your pre-defined tools here (need to improve this)
+            # TODO: You can add code for your pre-defined tools here
         ]
         for tool in self.tools_to_run:
             # logging.info(f"Tool initialized:\n{tool}")
@@ -187,6 +217,9 @@ class JupyterKernel:
         else:
             ret = ''.join(outputs)
 
+        # Remove ANSI
+        ret = strip_ansi(ret) 
+
         if os.environ.get("DEBUG", False):
             logging.info(f"OUTPUT:\n{ret}")
         return ret
@@ -275,8 +308,8 @@ class JupyterGatewayKubernetes:
     IMAGE = "docker.io/xingyaoww/codeact-executor"
     NAMESPACE = os.environ.get("KUBERNETES_NAMESPACE", "codeact-chat-ui")
     RESOURCE_CONSTRAINTS = {
-        'limits': {'memory': "512Mi", 'cpu': "200m"},
-        'requests': {'memory': "256Mi", 'cpu': "100m"}
+        'limits': {'memory': "512Mi", 'cpu': "1"},
+        'requests': {'memory': "256Mi", 'cpu': "1"}
     }
 
     def __init__(self, name):

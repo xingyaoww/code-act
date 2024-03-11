@@ -12,7 +12,7 @@ from jupyter import JupyterKernel, JupyterGatewayDocker, JupyterGatewayKubernete
 
 logging.basicConfig(level=logging.INFO)
 
-if os.environ.get("USE_KUBERNETES", "false").lower() == "true":
+if os.environ.get("USE_KUBERNETES", "0").lower() == "1":
     JupyterKernelWrapper = JupyterGatewayKubernetes
     logging.info("Using Kubernetes as the backend for JupyterGateway")
 else:

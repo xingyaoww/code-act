@@ -15,6 +15,10 @@ Integrated with a Python interpreter, CodeAct can execute code actions and dynam
 
 ![Overview](figures/overview.png)
 
+### News
+**March 11, 2024**: We now support serving all of the CodeActAgent's components (LLM serving, code executor, MongoDB, Chat-UI) via Kubernetes! Check out [this guide](docs/KUBERNETES_DEPLOY.md)!
+
+
 ## Why CodeAct?
 
 Our extensive analysis of 17 LLMs on API-Bank and a newly curated benchmark [M<sup>3</sup>ToolEval](docs/EVALUATION.md) shows that CodeAct outperforms widely used alternatives like Text and JSON (up to 20% higher success rate). Please check our paper for more detailed analysis!
@@ -52,6 +56,18 @@ Please check out [:page_with_curl: our paper](TODO) for more details about data 
 <video src="https://github.com/xingyaoww/code-act/assets/38853559/62c80ada-62ce-447e-811c-fc801dd4beac"> </video>
 *Demo of the chat interface.*
 
+A CodeActAgent system contains the following components:
+
+- **LLM Serving**: We use [vLLM as an example](#serve-the-model-using-vllm-into-openai-compatible-api), but any serving software that can serve the model into an OpenAI compatile API should be fine.
+- **Interaction Interface**:
+  - [Chat-UI for chat interface + MongoDB for chat history](#via-chat-ui)
+  - OR [simple Python script](#via-simple-python-script)
+- **Code Execution Engine**: This service will starts an [API](#start-your-code-execution-engine) that accepts code execution requests from Chat-UI or the Python script, then starts an individual docker container to execute code for *each* chat session.
+
+🌟 **If you have access to a Kubernetes cluster**: You can follow [our kubernetes setup guide](docs/KUBERNETES_DEPLOY.md) that allows you do spin up all of these components using one command!
+
+Follow the guide below to setup with Docker.
+
 ### Serve the Model using vLLM into OpenAI Compatible API
 
 ```bash
@@ -74,9 +90,6 @@ We implemented a containerized code execution engine based on [JupyterKernelGate
 # Start a code execution server at 8081
 ./scripts/chat/code_execution/start_jupyter_server.sh 8081
 ```
-
-🌟 **Contribution welcomed**: We are still looking for a more scalable (and more secure) way to implement this (e.g., docker-in-docker, better management for pre-defined tools, support for web-browsing, file upload / management, etc) -- recommendations or PRs are welcomed!
-
 
 ### Interact with the system!
 

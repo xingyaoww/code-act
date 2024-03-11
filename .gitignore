@@ -170,3 +170,4 @@ scripts/eval/m3tooleval/outputs*
 scripts/eval/m3tooleval/plots*
 scripts/eval/api-bank/results/level-1-given-desc*
 .mongo*
+scripts/chat/kubernetes/k8s.yml
