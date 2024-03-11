@@ -16,7 +16,7 @@ Integrated with a Python interpreter, CodeAct can execute code actions and dynam
 ![Overview](figures/overview.png)
 
 ## News
-**Mar 11, 2024**: We now support serving all of the CodeActAgent's components (LLM serving, code executor, MongoDB, Chat-UI) via Kubernetes ⎈! Check out [this guide](docs/KUBERNETES_DEPLOY.md)!
+**Mar 11, 2024**: We now support serving all CodeActAgent's components (LLM serving, code executor, MongoDB, Chat-UI) via Kubernetes ⎈! Check out [this guide](docs/KUBERNETES_DEPLOY.md)!
 
 **Feb 2, 2024**: CodeAct is released!
 
@@ -33,7 +33,7 @@ Our extensive analysis of 17 LLMs on API-Bank and a newly curated benchmark [M<s
 
 ## 📁 CodeActInstruct
 
-We collect an instruction-tuning dataset CodeActInstruct that consists of 7k multi-turn interactions using CodeAct. Dataset is release at [huggingface dataset 🤗](https://huggingface.co/datasets/xingyaoww/code-act). Please refer to the paper and [this section](#-data-generation-optional) for details of data collection.
+We collect an instruction-tuning dataset, CodeActInstruct, consists of 7k multi-turn interactions using CodeAct. Dataset is release at [huggingface dataset 🤗](https://huggingface.co/datasets/xingyaoww/code-act). Please refer to the paper and [this section](#-data-generation-optional) for details of data collection.
 
 
 ![Data Statistics](figures/data-stats.png)
@@ -46,7 +46,7 @@ Trained on **CodeActInstruct** and general conversations, **CodeActAgent** excel
 - **CodeActAgent-Llama-7b** ([model link](https://huggingface.co/xingyaoww/CodeActAgent-Llama-2-7b)): using Llama-2-7b as the base model with 4k context window.
 
 ![Model Performance](figures/model-performance.png)
-*Evaluation results for CodeActAgent. ID and OD stand for in-domain and out-of-domain evaluation correspondingly. Overall averaged performance normalizes the MT-Bench score to be consistent with other tasks and excludes in-domain tasks for fair comparison.*
+*Evaluation results for CodeActAgent. ID and OD correspondingly stand for in-domain and out-of-domain evaluation. Overall averaged performance normalizes the MT-Bench score to be consistent with other tasks and excludes in-domain tasks for fair comparison.*
 
 
 Please check out [:page_with_curl: our paper](TODO) for more details about data collection, model training, evaluation, and more!
@@ -63,11 +63,11 @@ A CodeActAgent system contains the following components:
 - **Interaction Interface**:
   - [Chat-UI for chat interface + MongoDB for chat history](#via-chat-ui)
   - OR [simple Python script](#via-simple-python-script)
-- **Code Execution Engine**: This service will starts an [API](#start-your-code-execution-engine) that accepts code execution requests from Chat-UI or the Python script, then starts an individual docker container to execute code for *each* chat session.
+- **Code Execution Engine**: This service will start an [API](#start-your-code-execution-engine) that accepts code execution requests from Chat-UI or the Python script, then starts an individual docker container to execute code for *each* chat session.
 
-🌟 **If you have access to a Kubernetes cluster**: You can follow [our kubernetes setup guide](docs/KUBERNETES_DEPLOY.md) that allows you do spin up all of these components using one command!
+🌟 **If you have access to a Kubernetes cluster**: You can follow [our Kubernetes setup guide](docs/KUBERNETES_DEPLOY.md) that allows you to spin up all of these components using one command!
 
-Follow the guide below to setup with Docker.
+Follow the guide below to set up with Docker.
 
 ### Serve the Model using vLLM into OpenAI Compatible API
 
@@ -96,7 +96,7 @@ We implemented a containerized code execution engine based on [JupyterKernelGate
 
 #### via simple Python script
 
-If you don't want to spin-up a fancy interface and just want to play with it from the command line, we got you covered!
+If you don't want to spin up a fancy interface and just want to play with it from the command line, we got you covered!
 
 ```bash
 # Make sure you started vLLM and code execution engine before running this!
