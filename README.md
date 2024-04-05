@@ -10,7 +10,7 @@
 <a href="https://chat.xwang.dev/">🤖 Chat with CodeActAgent!</a>
 </p>
 
-We propose to use executable Python **code** to consolidate LLM agents’ **act**ions into a unified action space (**CodeAct**).
+We propose to use executable **code** to consolidate LLM agents’ **act**ions into a unified action space (**CodeAct**).
 Integrated with a Python interpreter, CodeAct can execute code actions and dynamically revise prior actions or emit new actions upon new observations (e.g., code execution results) through multi-turn interactions (check out [this example!](https://chat.xwang.dev/r/Vqn108G)).
 
 ![Overview](figures/overview.png)
