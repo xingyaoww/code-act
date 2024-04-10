@@ -17,6 +17,8 @@ Integrated with a Python interpreter, CodeAct can execute code actions and dynam
 
 ## News
 
+**Apr 10, 2024**: CodeActAgent Mistral is [officially available at `ollama`](https://ollama.com/xingyaow/codeact-agent-mistral)!
+
 **Mar 11, 2024**: We also add [llama.cpp](https://github.com/ggerganov/llama.cpp) support for inferencing CodeActAgent on laptop (tested on MacOS), check out instructions [here](#using-llamacpp-for-laptop)!
 
 **Mar 11, 2024**: We now support serving all CodeActAgent's components (LLM serving, code executor, MongoDB, Chat-UI) via Kubernetes ⎈! Check out [this guide](docs/KUBERNETES_DEPLOY.md)!
