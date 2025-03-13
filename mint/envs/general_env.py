@@ -273,7 +273,7 @@ class GeneralEnv(BaseEnv):
 
     def reset(self) -> State:
         use_tool: bool = self.config["use_tools"]
-        if use_tool and len(self.tool_set) > 0:
+        if use_tool and len(self.tool_set) == 0:
             LOGGER.warning(
                 (
                     "No tool is provided when use_tools is True.\n"
