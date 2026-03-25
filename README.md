@@ -25,6 +25,28 @@ Integrated with a Python interpreter, CodeAct can execute code actions and dynam
 
 **Feb 2, 2024**: CodeAct is released!
 
+## Supported LLM Providers
+
+CodeAct supports multiple LLM providers for agent evaluation:
+
+| Provider | Agent Class | Models |
+|----------|------------|--------|
+| OpenAI | `OpenAILMAgent` | GPT-3.5-Turbo, GPT-4, etc. |
+| Anthropic | `ClaudeLMAgent` | Claude 2, Claude Instant |
+| Google | `BardLMAgent` | PaLM |
+| [MiniMax](https://platform.minimaxi.com/) | `MiniMaxLMAgent` | MiniMax-M2.7, MiniMax-M2.7-highspeed |
+| vLLM (self-hosted) | `VLLMAgent` | Any OpenAI-compatible model |
+
+### Using MiniMax
+
+To use [MiniMax](https://platform.minimaxi.com/) models, set your API key:
+
+```bash
+export MINIMAX_API_KEY="your-api-key"
+```
+
+MiniMax models are configured in `EVALUATED_MODEL_LIST` with `agent_class: "MiniMaxLMAgent"`. The agent uses MiniMax's OpenAI-compatible API endpoint (`https://api.minimax.io/v1`) with automatic temperature clamping for API compatibility.
+
 ## Why CodeAct?
 
 Our extensive analysis of 17 LLMs on API-Bank and a newly curated benchmark [M<sup>3</sup>ToolEval](docs/EVALUATION.md) shows that CodeAct outperforms widely used alternatives like Text and JSON (up to 20% higher success rate). Please check our paper for more detailed analysis!

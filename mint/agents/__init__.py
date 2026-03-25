@@ -6,3 +6,5 @@ from .claude_feedback_agent import ClaudeFeedbackAgent
 from .vllm_feedback_agent import VLLMFeedbackAgent
 from .vllm_agent import VLLMAgent
 from .claude_agent import ClaudeLMAgent
+from .minimax_lm_agent import MiniMaxLMAgent
+from .minimax_feedback_agent import MiniMaxFeedbackAgent
