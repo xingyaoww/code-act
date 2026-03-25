@@ -155,6 +155,24 @@ EVALUATED_MODEL_LIST = [
             "temperature": 0.0,
         },
     },
+    {
+        "agent_class": "MiniMaxLMAgent",
+        "config": {
+            "model_name": "MiniMax-M2.7",
+            "chat_mode": True,
+            "max_tokens": 1024,
+            "temperature": 0.0,
+        },
+    },
+    {
+        "agent_class": "MiniMaxLMAgent",
+        "config": {
+            "model_name": "MiniMax-M2.7-highspeed",
+            "chat_mode": True,
+            "max_tokens": 1024,
+            "temperature": 0.0,
+        },
+    },
     # {
     #     "agent_class": "VLLMAgent",
     #     "config": {
